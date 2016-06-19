@@ -3,6 +3,8 @@ package thekucays.com.testandroidstudio1.fragments;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,9 +14,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import thekucays.com.testandroidstudio1.R;
+import thekucays.com.testandroidstudio1.helpers.JSONParser;
 import thekucays.com.testandroidstudio1.pojos.Posting;
 
 /**
@@ -22,24 +30,98 @@ import thekucays.com.testandroidstudio1.pojos.Posting;
  */
 public class HomeFragment extends Fragment{
 
-    public HomeFragment(){}
+    private static String url = "http://jsonplaceholder.typicode.com/posts";
+    //ArrayList<Posting> listPosting = null;
+    private String[] userId = {};
+    private String[] id = {};
+    private String[] title = {};
+    private String[] body = {};
+
+    private ArrayList<Posting> listPosting = new ArrayList<Posting>();
+
+    public HomeFragment(){
+        //listPosting = new ArrayList<Posting>();
+        //new JSONParse().execute();
+    }
+
+    public void setListPosting(ArrayList<Posting> posting){
+        listPosting = posting;
+    }
+    public ArrayList<Posting> getListPosting(){
+        return listPosting;
+    }
+
+    private class JSONParse extends AsyncTask<String, String, ArrayList<Posting>> {
+        private ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute(){
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setMessage("Sedang mengambil data..");
+            progressDialog.setIndeterminate(false);
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected ArrayList<Posting> doInBackground(String... params) {
+            JSONParser jsonParser = new JSONParser();
+
+            /*JSONObject jsonObject = jsonParser.getFromURL(url);
+            return jsonObject;*/
+            try {
+                JSONArray jsonArray = jsonParser.getFromURL(url);
+                System.out.println("jsonArray length: " + jsonArray.length());
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                    // create new Posting class object
+                    Posting posting = new Posting();
+                    posting.setId(jsonObject.getString("id"));
+                    posting.setUserId(jsonObject.getString("userId"));
+                    posting.setTitle(jsonObject.getString("title"));
+                    posting.setBody(jsonObject.getString("body"));
+
+                    listPosting.add(posting);
+                }
+                //return listPosting;
+            }
+            catch(JSONException jse){
+                jse.printStackTrace();
+            }
+            //return null;
+            return listPosting;
+        }
+
+
+        @Override
+        protected void onPostExecute(ArrayList<Posting> listPosting){
+            progressDialog.dismiss();
+            //refreshData();
+            System.out.println("listPosting lengthjjhjjh: " + listPosting.size());
+            setListPosting(listPosting);
+            updateUI();  //updateUI dipindah ke sini karena kalo dibikin di onCreateView suka ga ke detek
+        }
+    }
 
     // dummy buat nge tes
-    ArrayList<Posting> listPosting = null;
-    private String[] userId = {"1", "1"};
-    private String[] id = {"1", "2"};
+    /*private String[] id = {"1", "2"};
     private String[] title = {"sunt aut facere repellat provident", "ea molestias quasi"};
     private String[] body =
     {
             "quia et suscipit\\nsuscipit recusandae consequuntur expedita et cum\\nreprehenderit molestiae ut ut quas totam\\nnostrum rerum est autem sunt rem eveniet architecto",
             "est rerum tempore vitae\\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\\nqui aperiam non debitis possimus qui neque nisi nulla"
-    };
+    }; */
 
     private RecyclerView postingRecyclerView;
     private PostingAdapter postingAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
+        //listPosting = new ArrayList<Posting>();
+        new JSONParse().execute();
+
         refreshData();
         super.onCreate(savedInstanceState);
     }
@@ -48,7 +130,7 @@ public class HomeFragment extends Fragment{
             listPosting.clear();
         }*/
 
-        listPosting = new ArrayList<Posting>();
+        //listPosting = new ArrayList<Posting>();
         for(int i=0; i<userId.length; i++){
             Posting p = new Posting();
             p.setUserId(userId[i]);
@@ -70,7 +152,7 @@ public class HomeFragment extends Fragment{
         //postingRecyclerView.addItemDecoration(new SimpleDividerItemDecoration(getResources()));
         postingRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        updateUI();
+        //updateUI();
         return viewHome;
     }
 
@@ -144,7 +226,9 @@ public class HomeFragment extends Fragment{
     }
 
     private void updateUI(){
-        postingAdapter = new PostingAdapter(listPosting);
+        //postingAdapter = new PostingAdapter(listPosting);
+        System.out.println("listposting length: "+ getListPosting().size());
+        postingAdapter = new PostingAdapter(getListPosting());
         postingRecyclerView.setAdapter(postingAdapter);
     }
 
