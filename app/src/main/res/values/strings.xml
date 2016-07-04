@@ -3,4 +3,17 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
+
+    <!-- URLs -->
+    <string name="url_test">http://http://jsonplaceholder.typicode.com/posts/1</string>
+
+    <!-- Notifs -->
+    <string name="notif_home">Koneksi tersedia</string>
+
+    <!-- Warnings -->
+    <string name="warning_noconnection_ind">Koneksi tidak tersedia. Periksa koneksi dan restart aplikasi</string>
+
+    <!-- IDs -->
+    <string name="id_keterangan">Keterangan</string>
+
 </resources>
