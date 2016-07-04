@@ -12,22 +12,33 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import thekucays.com.testandroidstudio1.fragments.HomeFragment;
+import thekucays.com.testandroidstudio1.fragments.NoConnectionFragment;
 import thekucays.com.testandroidstudio1.fragments.TentangFragment;
+import thekucays.com.testandroidstudio1.helpers.ConnectionTester;
 
 public class MainActivity extends AppCompatActivity {
     // ini buat nyimpen posisi dari navigation drawer nya
     private final int home = 0;
     private final int tentang = 1;
+    private final int keterangan = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // pertama dibuka tampilin home
-        displayView(home);
+        // first things first, cek koneksi nya..kalo egga ada, tampilin warning, lalu tutup
+        boolean connection = ConnectionTester.getInstance().isConnectionAvailable(getApplicationContext());
+        if(!connection){
+            displayView(keterangan);
+        }
+        else {
+            // pertama dibuka tampilin home
+            displayView(home);
+        }
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -69,6 +80,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case tentang:
                 fragment = new TentangFragment();
+                break;
+            case keterangan:
+                fragment = new NoConnectionFragment();
                 break;
             default:
                 break;

@@ -22,6 +22,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import thekucays.com.testandroidstudio1.R;
+import thekucays.com.testandroidstudio1.helpers.ConnectionTester;
 import thekucays.com.testandroidstudio1.helpers.JSONParser;
 import thekucays.com.testandroidstudio1.pojos.Posting;
 
@@ -119,9 +120,12 @@ public class HomeFragment extends Fragment{
 
     @Override
     public void onCreate(Bundle savedInstanceState){
-        //listPosting = new ArrayList<Posting>();
+        // first things first, cek koneksi nya..kalo egga ada, tampilin warning, lalu tutup
+        /*boolean connection = ConnectionTester.getInstance().isConnectionAvailable(getApplicationContext());
+        if(!connection){
+            displayView(keterangan);
+        }*/
         new JSONParse().execute();
-
         refreshData();
         super.onCreate(savedInstanceState);
     }
