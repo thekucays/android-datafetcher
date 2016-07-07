@@ -48,7 +48,7 @@ public class TentangFragment extends Fragment {
 
         setupViewPager(viewPager);
         // after you set the adapter you have to check if view is laid out, i did a custom method for it
-        /*if (ViewCompat.isLaidOut(tabLayout)) {
+        if (ViewCompat.isLaidOut(tabLayout)) {
             setViewPagerListener();
         } else {
             tabLayout.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
@@ -58,9 +58,9 @@ public class TentangFragment extends Fragment {
                     tabLayout.removeOnLayoutChangeListener(this);
                 }
             });
-        }*/
+        }
 
-        tabLayout.setupWithViewPager(viewPager);
+        /*tabLayout.setupWithViewPager(viewPager);
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {}
@@ -68,9 +68,9 @@ public class TentangFragment extends Fragment {
             public void onTabUnselected(TabLayout.Tab tab) {}
             @Override
             public void onTabReselected(TabLayout.Tab tab) {}
-        });
+        });*/
     }
-    /*private void setViewPagerListener() {
+    private void setViewPagerListener() {
         tabLayout.setupWithViewPager(viewPager);
         // use class TabLayout.ViewPagerOnTabSelectedListener
         // note that it's a class not an interface as OnTabSelectedListener, so you can't implement it in your activity/fragment
@@ -86,13 +86,13 @@ public class TentangFragment extends Fragment {
                 super.onTabSelected(tab);
             }
         });
-    }*/
+    }
 
     // dijalanin pas onActivityCreated.. untuk setting adapter nya
     private void setupViewPager(ViewPager viewPager){
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
-        viewPagerAdapter.addFragment(new TentangAplikasi(), "Aplikasi");
-        viewPagerAdapter.addFragment(new TentangPembuat(), "Pembuat");
+        viewPagerAdapter.addFragment(new TentangAplikasi(), getResources().getString(R.string.const_tentangaplikasi_header));
+        viewPagerAdapter.addFragment(new TentangPembuat(), getResources().getString(R.string.const_tentangpembuat_header));
 
         viewPager.setAdapter(viewPagerAdapter);
     }

@@ -4,6 +4,7 @@ package thekucays.com.testandroidstudio1.fragments;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -23,6 +24,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import thekucays.com.testandroidstudio1.R;
+import thekucays.com.testandroidstudio1.activities.ViewPosting;
 import thekucays.com.testandroidstudio1.helpers.ConnectionTester;
 import thekucays.com.testandroidstudio1.helpers.JSONParser;
 import thekucays.com.testandroidstudio1.pojos.Posting;
@@ -60,7 +62,7 @@ public class HomeFragment extends Fragment {
         protected void onPreExecute(){
             super.onPreExecute();
             progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setMessage("Sedang mengambil data..");
+            progressDialog.setMessage(getResources().getString(R.string.const_loadingtext));
             progressDialog.setIndeterminate(false);
             progressDialog.setCancelable(false);
             progressDialog.show();
@@ -73,19 +75,20 @@ public class HomeFragment extends Fragment {
             /*JSONObject jsonObject = jsonParser.getFromURL(url);
             return jsonObject;*/
             try {
-                JSONArray jsonArray = jsonParser.getFromURL(url);
-                System.out.println("jsonArray length: " + jsonArray.length());
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                JSONArray jsonArray = (JSONArray)jsonParser.getFromURL(getResources().getString(R.string.url_test_alldata), 0);
+                if(jsonArray != null) {
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                    // create new Posting class object
-                    Posting posting = new Posting();
-                    posting.setId(jsonObject.getString("id"));
-                    posting.setUserId(jsonObject.getString("userId"));
-                    posting.setTitle(jsonObject.getString("title"));
-                    posting.setBody(jsonObject.getString("body"));
+                        // create new Posting class object
+                        Posting posting = new Posting();
+                        posting.setId(jsonObject.getString("id"));
+                        posting.setUserId(jsonObject.getString("userId"));
+                        posting.setTitle(jsonObject.getString("title"));
+                        posting.setBody(jsonObject.getString("body"));
 
-                    listPosting.add(posting);
+                        listPosting.add(posting);
+                    }
                 }
                 //return listPosting;
             }
@@ -186,6 +189,13 @@ public class HomeFragment extends Fragment {
 
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();*/
+
+                    Intent intent = new Intent(getActivity(), ViewPosting.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("postID", posting.getId());
+                    intent.putExtras(bundle);
+
+                    startActivity(intent);
                 }
             });
         }

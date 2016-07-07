@@ -5,7 +5,8 @@
     <string name="action_settings">Settings</string>
 
     <!-- URLs -->
-    <string name="url_test">http://http://jsonplaceholder.typicode.com/posts/1</string>
+    <string name="url_test_alldata">http://jsonplaceholder.typicode.com/posts</string>
+    <string name="url_test_single">http://jsonplaceholder.typicode.com/posts/</string>
 
     <!-- Notifs -->
     <string name="notif_home">Koneksi tersedia</string>
@@ -17,7 +18,11 @@
     <string name="id_keterangan">Keterangan</string>
 
     <!-- Constants -->
+    <string name="const_loadingtext">Sedang mengambil data..</string>
+    <string name="const_tentang">Tentang Aplikasi</string>
+    <string name="const_tentangaplikasi_header">Aplikasi</string>
     <string name="const_tentangaplikasi">Ini adalah aplikasi sederhana untuk mengambil file JSON</string>
+    <string name="const_tentangpembuat_header">Pembuat</string>
     <string name="const_tentangpembuat">Aplikasi dibuat oleh thekucays</string>
 
 </resources>

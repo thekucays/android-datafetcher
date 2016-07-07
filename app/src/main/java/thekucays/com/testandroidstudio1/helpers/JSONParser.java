@@ -26,6 +26,7 @@ public class JSONParser {
     static InputStream is = null;
     static JSONObject jObj = null;
     JSONArray jsonArray = null;
+    JSONObject jsonObject = null;
     static String json = "";
 
     // constructor
@@ -33,7 +34,11 @@ public class JSONParser {
 
     }
 
-    public JSONArray getFromURL(String url) {
+    public Object getFromURL(String url, int option) {
+        // options explained
+        int array = 0;
+        int single = 1;
+
         StringBuilder builder = new StringBuilder();
         HttpClient client = new DefaultHttpClient();
         HttpGet httpGet = new HttpGet(url);
@@ -55,13 +60,30 @@ public class JSONParser {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        try {
-            System.out.println("HASIL JSON: " + builder.toString());
-            jsonArray = new JSONArray( builder.toString());
-        } catch (JSONException e) {
-            Log.e("JSON Parser", "Error parsing data " + e.toString());
+
+        // ada 2 macam return type disini..
+        if(option == array) {
+            try {
+                System.out.println("HASIL JSON: " + builder.toString());
+                jsonArray = new JSONArray(builder.toString());
+            } catch (JSONException e) {
+                Log.e("JSON Parser", "Error parsing data " + e.toString());
+            }
+            return jsonArray;
         }
-        return jsonArray;
+        else if(option == single){
+            try{
+                System.out.println("HASIL JSON: " + builder.toString());
+                // hint: use ctrl + p to show hint of the constructor
+                jsonObject = new JSONObject(builder.toString());
+            }
+            catch(JSONException jse){
+                jse.printStackTrace();
+            }
+            return jsonObject;
+        }
+
+        return null;
     }
 
 
