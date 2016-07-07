@@ -16,4 +16,8 @@
     <!-- IDs -->
     <string name="id_keterangan">Keterangan</string>
 
+    <!-- Constants -->
+    <string name="const_tentangaplikasi">Ini adalah aplikasi sederhana untuk mengambil file JSON</string>
+    <string name="const_tentangpembuat">Aplikasi dibuat oleh thekucays</string>
+
 </resources>

@@ -1,8 +1,11 @@
 package thekucays.com.testandroidstudio1;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
+//import android.app.Fragment;
+//import android.app.FragmentManager;
+//import android.app.FragmentManager;
+import android.support.v4.app.FragmentManager;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -89,8 +92,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(fragment != null){
-            // ini pakek yang dari android.app
-            FragmentManager fragmentManager = getFragmentManager();
+            //FragmentManager fragmentManager = getFragmentManager();
+            // karena fragment nya pakai lib dari "android.support.v4" bukan "android.app" (demi kompatibilitas) maka cara nya kaya gini
+            FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_container, fragment)
                     .commit();

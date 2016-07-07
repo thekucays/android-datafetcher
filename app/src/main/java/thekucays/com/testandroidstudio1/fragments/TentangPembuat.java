@@ -10,14 +10,11 @@ import android.view.ViewGroup;
 import thekucays.com.testandroidstudio1.R;
 
 /**
- * Created by thekucays on 7/5/16.
+ * Created by thekucays on 7/7/16.
  */
-public class NoConnectionFragment extends Fragment {
-    public NoConnectionFragment() {}
-
+public class TentangPembuat extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View viewNoKoneksi = inflater.inflate(R.layout.nokoneksi_layout, container, false);
-        return viewNoKoneksi;
+        return inflater.inflate(R.layout.tentang_aplikasi_layout, container, false);
     }
 }

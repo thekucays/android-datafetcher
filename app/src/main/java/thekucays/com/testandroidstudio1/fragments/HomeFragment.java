@@ -1,11 +1,12 @@
 package thekucays.com.testandroidstudio1.fragments;
 
-import android.app.Fragment;
+//import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -29,7 +30,7 @@ import thekucays.com.testandroidstudio1.pojos.Posting;
 /**
  * Created by thekucays on 6/16/16.
  */
-public class HomeFragment extends Fragment{
+public class HomeFragment extends Fragment {
 
     private static String url = "http://jsonplaceholder.typicode.com/posts";
     //ArrayList<Posting> listPosting = null;
@@ -126,14 +127,10 @@ public class HomeFragment extends Fragment{
             displayView(keterangan);
         }*/
         new JSONParse().execute();
-        refreshData();
+        //refreshData();
         super.onCreate(savedInstanceState);
     }
-    public void refreshData(){
-        /*if(!listPosting.isEmpty()){
-            listPosting.clear();
-        }*/
-
+    /*public void refreshData(){
         //listPosting = new ArrayList<Posting>();
         for(int i=0; i<userId.length; i++){
             Posting p = new Posting();
@@ -144,7 +141,7 @@ public class HomeFragment extends Fragment{
 
             listPosting.add(p);
         }
-    }
+    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -179,8 +176,7 @@ public class HomeFragment extends Fragment{
                             .show();
                     // pindah dari fragment home ke fragment posting nya..untuk ngeliat detail nya
                     //Fragment viewPostingFragment = new ViewPostingFragment();
-                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                    //fragmentTransaction.replace(R.id.frame_container, viewPostingFragment);
+                    /*FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 
                     // passing argument, jadi masukin fragment nya kayak gini..
                     fragmentTransaction.replace(R.id.frame_container, ViewPostingFragment.newInstance(
@@ -189,7 +185,7 @@ public class HomeFragment extends Fragment{
                     ));
 
                     fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
+                    fragmentTransaction.commit();*/
                 }
             });
         }
@@ -229,6 +225,7 @@ public class HomeFragment extends Fragment{
         }
     }
 
+    // ini dijalanin pas udah selesai fetch JSON dari server nya
     private void updateUI(){
         //postingAdapter = new PostingAdapter(listPosting);
         System.out.println("listposting length: "+ getListPosting().size());
